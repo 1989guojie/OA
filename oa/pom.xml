@@ -1,0 +1,189 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>cn.guojie</groupId>
+  <artifactId>oa</artifactId>
+  <version>0.0.1</version>
+  <packaging>war</packaging>
+  
+  <properties>
+  	<junit.version>4.11</junit.version>
+  	<tomcat.jsp.version>7.0.47</tomcat.jsp.version>
+  	<jstl.version>1.2</jstl.version>
+  	<spring.version>4.1.2.RELEASE</spring.version>
+  	<hibernate.version>4.3.5.Final</hibernate.version>
+  	<slf4j.version>1.7.5</slf4j.version>
+  	<mysql.version>5.1.13</mysql.version>
+  	<struts2.version>2.3.16.3</struts2.version>
+  	<mail.version>1.4.5</mail.version>
+  	<aspectj.version>1.8.3</aspectj.version>
+  </properties>
+  
+  <!-- 配置项目的依赖关系 -->
+  <dependencies>
+  	<dependency>
+  		<groupId>junit</groupId>
+  		<artifactId>junit</artifactId>
+  		<version>${junit.version}</version>
+  		<scope>test</scope>
+  	</dependency>
+  	
+  	<!-- 配置web所需要的依赖 -->
+  	<!-- jsp -->
+  	<dependency>
+  		<groupId>org.apache.tomcat</groupId>
+  		<artifactId>tomcat-jsp-api</artifactId>
+  		<version>${tomcat.jsp.version}</version>
+  		<!-- web容器会提供jar包 -->
+  		<scope>provided</scope>
+  	</dependency>
+  	
+  	<!-- jstl -->
+  	<dependency>
+  		<groupId>jstl</groupId>
+  		<artifactId>jstl</artifactId>
+  		<version>${jstl.version}</version>
+  	</dependency>
+  	
+  	<!-- 配置spring4 -->
+  	<!-- spring-web -->
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-web</artifactId>
+  		<version>${spring.version}</version>
+  	</dependency>
+  	
+  	<!-- spring-orm -->
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-orm</artifactId>
+  		<version>${spring.version}</version>
+  	</dependency>
+  	
+  	<dependency>
+  		<groupId>org.aspectj</groupId>
+  		<artifactId>aspectjweaver</artifactId>
+  		<version>${aspectj.version}</version>
+  	</dependency>
+  	
+  	<!-- 配置hibernate -->
+  	<!-- hibernate-core -->
+  	<dependency>
+  		<groupId>org.hibernate</groupId>
+  		<artifactId>hibernate-core</artifactId>
+  		<version>${hibernate.version}</version>
+  	</dependency>
+  	
+  	<!-- hibernate-entitymanager -->
+	<dependency>
+    	<groupId>org.hibernate</groupId>
+    	<artifactId>hibernate-entitymanager</artifactId>
+    	<version>${hibernate.version}</version>
+    </dependency> 
+   
+    <!-- c3p0 -->
+    <dependency>
+    	<groupId>org.hibernate</groupId>
+    	<artifactId>hibernate-c3p0</artifactId>
+    	<version>${hibernate.version}</version>
+    </dependency> 	
+  	
+  	<!-- ehcache -->
+  	<dependency>
+    	<groupId>org.hibernate</groupId>
+    	<artifactId>hibernate-ehcache</artifactId>
+    	<version>${hibernate.version}</version>
+    	<!-- 排除sl4j -->
+    	<exclusions>
+    		<exclusion>
+    			<groupId>org.slf4j</groupId>
+    			<artifactId>slf4j-api</artifactId>
+    		</exclusion>
+    	</exclusions>
+    </dependency>
+  	
+  	<!-- slf4j实现 -->
+  	<dependency>
+    	<groupId>org.slf4j</groupId>
+    	<artifactId>slf4j-jdk14</artifactId>
+    	<version>${slf4j.version}</version>
+    </dependency>
+  	
+  	<!-- MySQL驱动 -->
+    <dependency>
+    	<groupId>mysql</groupId>
+    	<artifactId>mysql-connector-java</artifactId>
+    	<version>${mysql.version}</version>
+    </dependency>
+  	
+  	
+  	 <!-- 配置Struts2 -->
+  	 <!-- struts2-core -->
+    <dependency>
+    	<groupId>org.apache.struts</groupId>
+    	<artifactId>struts2-core</artifactId>
+    	<version>${struts2.version}</version>
+    	<!-- 排除依赖 -->
+    	<exclusions>
+    		<exclusion>
+    			<groupId>javassist</groupId>
+    			<artifactId>javassist</artifactId>
+    		</exclusion>
+    	</exclusions>
+    </dependency>
+    
+    <!-- struts2-spring-plugin -->
+    <dependency>
+    	<groupId>org.apache.struts</groupId>
+    	<artifactId>struts2-spring-plugin</artifactId>
+    	<version>${struts2.version}</version>
+    </dependency>
+    
+    <!-- javaMail -->
+    <dependency>
+    	<groupId>javax.mail</groupId>
+    	<artifactId>mail</artifactId>
+    	<version>${mail.version}</version>
+    </dependency>
+   
+  </dependencies>
+  
+  <!-- 项目构建部分 -->
+  <build>
+  	<!-- 定义插件 -->
+  	<plugins>
+  		<!-- 定义编译的插件 -->
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-compiler-plugin</artifactId>
+      	  	<version>3.1</version>
+      	  		<configuration>
+      	  			<source>1.8</source>
+      	  			<target>1.8</target>
+      	  		</configuration>
+  		</plugin>
+  		
+  		<!-- 定义tomcat插件 -->
+  		<plugin>
+      	  		<groupId>org.apache.tomcat.maven</groupId>
+      	  		<artifactId>tomcat7-maven-plugin</artifactId>
+      	  		<version>2.2</version>
+      	  		<configuration>
+      	  			<!-- 端口号 -->
+      	  			<port>8080</port>
+      	  		</configuration>
+      	  		<!-- 把插件中的goal与生命周期中的phase进行绑定 -->
+      	  		<executions>
+      	  			<execution>
+      	  				<goals><goal>run</goal></goals>
+      	  				<phase>package</phase>
+      	  			</execution>
+      	  		</executions>
+      	  </plugin>
+  	</plugins>
+  </build>
+  
+  
+  
+</project>

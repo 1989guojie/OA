@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:c="http://www.springframework.org/schema/c"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        			    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        			    http://www.springframework.org/schema/context
+        			    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        			    http://www.springframework.org/schema/aop
+        			    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        			    http://www.springframework.org/schema/util
+        			    http://www.springframework.org/schema/util/spring-util-4.0.xsd
+        			    http://www.springframework.org/schema/tx
+        			    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+    
+    
+    <!-- 配置属性占位符 -->
+    <context:property-placeholder location="classpath:db.properties"/>
+    
+    
+    <!-- 配置数据源 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
+    	  p:driverClass="${c3p0.driverClass}"
+    	  p:jdbcUrl="${c3p0.jdbcUrl}"
+    	  p:user="${c3p0.user}"
+    	  p:password="${c3p0.password}"
+    	  p:maxPoolSize="${c3p0.maxPoolSize}"
+    	  p:minPoolSize="${c3p0.minPoolSize}"
+    	  p:initialPoolSize="${c3p0.initialPoolSize}"
+    	  p:maxIdleTime="${c3p0.maxIdleTime}"
+    	  p:checkoutTimeout="${c3p0.checkoutTimeout}"/>
+    
+    <!-- 配置SessionFactory -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+    	  p:dataSource-ref="dataSource">
+    	  <property name="packagesToScan">
+    	  	  <value>
+    	  	  		org.fkjava.oa.admin.identity.domain,
+    	  	  		org.fkjava.oa.admin.leave.domain
+    	  	  </value>
+    	  </property>
+    </bean>	  
+       			    
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+    	  p:sessionFactory-ref="sessionFactory"/>
+    
+    
+    <!-- 声明式事务配置 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+    	<tx:attributes>
+    		<!-- set开头的只能做查询 -->
+    		<tx:method name="set*" read-only="true"/>
+    		<!-- get开头的只能做查询 -->
+    		<tx:method name="get*" read-only="true"/>
+    		<!-- 剩余的方法可以做CUD (R) -->
+    		<tx:method name="*" read-only="false" isolation="DEFAULT" propagation="REQUIRED" rollback-for="java.lang.RuntimeException"/>
+    	</tx:attributes>
+    </tx:advice>
+    
+     <!-- 事务切面 -->
+    <aop:config>
+    	<!-- 定义切入点 -->
+    	<aop:pointcut expression="execution(* org.fkjava.oa.*.*.service.*.*.*(..))" id="pointcut"/>
+    	<!-- 事务运用到指定的切入点  -->
+    	<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
+    </aop:config>
+    
+         			    
+</beans>
