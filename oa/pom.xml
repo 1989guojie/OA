@@ -146,6 +146,19 @@
     	<artifactId>mail</artifactId>
     	<version>${mail.version}</version>
     </dependency>
+    
+    <!-- POI处理excel -->
+    <dependency>
+    	<groupId>org.apache.poi</groupId>
+    	<artifactId>poi</artifactId>
+    	<version>3.8</version>
+    </dependency>
+    
+    <dependency>
+    	<groupId>pinyin4j</groupId>
+    	<artifactId>pinyin4j</artifactId>
+    	<version>2.5.0</version>
+    </dependency>
    
   </dependencies>
   

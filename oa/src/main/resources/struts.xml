@@ -22,7 +22,8 @@
             <exception-mapping exception="java.lang.Exception" result="error"/>
         </global-exception-mappings>
         
-        <action name="selectJob" class="org.fkjava.oa.admin.identity.action.JobAction"></action>
+        <action name="selectJob" class="org.fkjava.oa.admin.identity.action.JobAction">
+        </action>
         
     </package>
     
