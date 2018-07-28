@@ -22,6 +22,10 @@
     <!-- 配置属性占位符 -->
     <context:property-placeholder location="classpath:db.properties"/>
     
+     
+    <!-- 开启组件扫描 : 扫描用这四种注解@Service() @Repository() @Controller @Component 注解的bean，扫描到后会交由Spring容器管理-->
+    <context:component-scan base-package="org.fkjava.oa"></context:component-scan>
+    
     
     <!-- 配置数据源 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
@@ -35,9 +39,10 @@
     	  p:maxIdleTime="${c3p0.maxIdleTime}"
     	  p:checkoutTimeout="${c3p0.checkoutTimeout}"/>
     
-    <!-- 配置SessionFactory -->
+    <!-- 配置SessionFactory,new configuration默认加载 hibernate.properties-->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
     	  p:dataSource-ref="dataSource">
+    	  <!-- 包扫描 -->
     	  <property name="packagesToScan">
     	  	  <value>
     	  	  		org.fkjava.oa.admin.identity.domain,
@@ -46,7 +51,7 @@
     	  </property>
     </bean>	  
        			    
-    <!-- 配置事务管理器 -->
+    <!-- 配置事务管理器，用hibernate.properties代替hibernate.cfg.xml -->
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"
     	  p:sessionFactory-ref="sessionFactory"/>
     

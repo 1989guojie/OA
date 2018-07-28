@@ -113,9 +113,5 @@ public class Dept implements Serializable {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 	
 }
