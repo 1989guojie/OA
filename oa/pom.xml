@@ -26,8 +26,9 @@
   		<groupId>junit</groupId>
   		<artifactId>junit</artifactId>
   		<version>${junit.version}</version>
-  		<scope>test</scope>
+  		<scope>test</scope> <!-- 不会打进war包 -->
   	</dependency>
+  	
   	
   	<!-- 配置web所需要的依赖 -->
   	<!-- jsp -->
@@ -147,6 +148,24 @@
     	<version>${mail.version}</version>
     </dependency>
     
+    
+  	 <!-- 测试，先后依赖关系，不能放在前面，要先加载spring才行 -->
+  	 <dependency>
+    	<groupId>org.apache.struts</groupId>
+    	<artifactId>struts2-junit-plugin</artifactId>
+    	<version>${struts2.version}</version>
+    	<scope>test</scope>
+    </dependency> 
+  	 
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-test</artifactId>
+    	<version>${spring.version}</version>
+    	<scope>test</scope>
+    </dependency>
+    
+
+    
     <!-- POI处理excel -->
     <dependency>
     	<groupId>org.apache.poi</groupId>
@@ -159,6 +178,8 @@
     	<artifactId>pinyin4j</artifactId>
     	<version>2.5.0</version>
     </dependency>
+    
+   
    
   </dependencies>
   

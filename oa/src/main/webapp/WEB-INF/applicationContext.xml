@@ -26,10 +26,10 @@
     <!-- 配置数据源，默认到src下加载c3p0.properties属性文件,可以不用导入占位符的配置，但要以c3p0.url等形式 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" />
     
-    <!-- 配置SessionFactory,new configuration默认加载 hibernate.properties-->
+    <!-- 配置SessionFactory,new configuration默认加载 src/hibernate.properties属性文件-->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
     	  p:dataSource-ref="dataSource">
-    	  <!-- 包扫描 -->
+    	  <!-- 持久化类采用包扫描 -->
     	  <property name="packagesToScan">
     	  	  <value>
     	  	  		org.fkjava.oa.admin.identity.domain,
