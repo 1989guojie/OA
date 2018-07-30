@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <package name="admin" namespace="/admin" extends="oa">
+
+		<!-- 全局结果配置 -->
+        <global-results>
+            <result name="error">/error.jsp</result>
+            <result name="login">/WEB-INF/jsp/admin/login.jsp</result>
+        </global-results>
+       
+       <!-- 配置index跳转action,当前命名空间下的全局action -->
+       <action name="*">
+       		<result>/WEB-INF/jsp/admin/{1}.jsp</result>
+       </action>
+        
+    </package>
+    
+    <!-- 引用struts2模块级别的配置文件 -->
+    <include file="org/fkjava/oa/admin/struts-admin-identity.xml"></include>
+    <include file="org/fkjava/oa/admin/struts-admin-leave.xml"></include>
+    
+</struts>

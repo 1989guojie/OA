@@ -24,6 +24,31 @@
 		<url-pattern>/*</url-pattern>
   </filter-mapping>
   
+  <!-- 配置session的有效时间 -->
+  <session-config>
+  	<session-timeout>30</session-timeout>
+  </session-config>
+  
+  <!-- 定义出错页面 -->
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/404.jsp</location>
+  </error-page>
+  
+  <!-- 配置jsp的全局信息 -->
+  <jsp-config>
+  	<jsp-property-group>
+  		<!-- 拦截所有的jsp页面 -->
+  		<url-pattern>*.jsp</url-pattern>
+  		<!-- EL表达式 ,不忽略-->
+  		<el-ignored>false</el-ignored>
+  		<!-- 页面java脚本 -->
+  		<scripting-invalid>true</scripting-invalid>
+  		<!-- 在拦截到得jsp前面引用该页面 -->
+  		<include-prelude>/WEB-INF/jsp/taglib.jsp</include-prelude>
+  	</jsp-property-group>
+  </jsp-config>
+  
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
