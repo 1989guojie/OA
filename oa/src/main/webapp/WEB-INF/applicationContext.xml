@@ -42,26 +42,28 @@
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"
     	  p:sessionFactory-ref="sessionFactory"/>
     
-    
+    <!-- 换成注解方式 -->
     <!-- 声明式事务配置 -->
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+<!--     <tx:advice id="txAdvice" transaction-manager="transactionManager">
     	<tx:attributes>
-    		<!-- set开头的只能做查询 -->
+    		set开头的只能做查询
     		<tx:method name="set*" read-only="true"/>
-    		<!-- get开头的只能做查询 -->
+    		get开头的只能做查询
     		<tx:method name="get*" read-only="true"/>
-    		<!-- 剩余的方法可以做CUD (R) -->
+    		剩余的方法可以做CUD (R)
     		<tx:method name="*" read-only="false" isolation="DEFAULT" propagation="REQUIRED" rollback-for="java.lang.RuntimeException"/>
     	</tx:attributes>
-    </tx:advice>
+    </tx:advice> -->
     
      <!-- 事务切面 -->
-    <aop:config>
-    	<!-- 定义切入点 -->
+<!--     <aop:config>
+    	定义切入点
     	<aop:pointcut expression="execution(* org.fkjava.oa.*.*.service.*.*.*(..))" id="pointcut"/>
-    	<!-- 事务运用到指定的切入点  -->
+    	事务运用到指定的切入点 
     	<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
-    </aop:config>
+    </aop:config> -->
     
+    <!-- 开启annotaiton注解事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
          			    
 </beans>
