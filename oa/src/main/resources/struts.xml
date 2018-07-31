@@ -13,13 +13,33 @@
 
 		<!-- 全局结果配置 -->
         <global-results>
-            <result name="error">/error.jsp</result>
+            <result name="error">/404.jsp</result>
         </global-results>
         
 		<!-- 全局异常配置 -->
         <global-exception-mappings>
             <exception-mapping exception="java.lang.Exception" result="error"/>
         </global-exception-mappings>
+        
+       <!-- 配置生成二维码 -->
+        <action name="barcode" class="org.fkjava.oa.core.action.BarcodeAction"></action>
+        
+        <!-- 配置验证码 -->
+        <action name="verify" class="org.fkjava.oa.core.action.VerifyAction"></action>
+        
+        
+        
+        <!-- 配置文件下载 -->
+        <action name="download" class="org.fkjava.oa.core.action.DownLoadAction">
+        	<result type="stream">
+        		<!-- inputName参数:该属性指定当前action类的InputStream getFileStream() -->
+        		<param name="inputName">fileStream</param>
+        		<!-- 下载时的文件名 -->
+        		<param name="contentDisposition">attachment;filename=${downFileName}</param>
+        		<!-- bufferSize:下载时的缓冲流大小 -->
+        		<param name="bufferSize">2048</param>
+        	</result>
+        </action>
     
     </package>
     
