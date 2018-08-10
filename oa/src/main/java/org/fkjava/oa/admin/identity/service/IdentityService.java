@@ -8,4 +8,9 @@ public interface IdentityService {
 
 	List<Job> getJobs();
 
+	/**
+	 * 用户登录
+	 */
+	String login(String userId, String password, String vcode, Integer key);
+
 }

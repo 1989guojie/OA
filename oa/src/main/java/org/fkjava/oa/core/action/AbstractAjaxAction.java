@@ -22,6 +22,8 @@ public abstract class AbstractAjaxAction extends ActionSupport {
 		/** 调用子类的方法 */
 		String json = this.ajaxTask();
 		
+		System.out.println("json:" + json);
+		
 		/** 对响应的文本做GZIP压缩, 为了提高网站的响应速度 */
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		GZIPOutputStream gzip = new GZIPOutputStream(bos);

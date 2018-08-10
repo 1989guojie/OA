@@ -12,6 +12,9 @@
             <result name="error">/error.jsp</result>
             <result name="login">/WEB-INF/jsp/admin/login.jsp</result>
         </global-results>
+        
+        <!-- 异步请求登录，不需要返回视图 -->
+        <action name="loginAjax" class="org.fkjava.oa.admin.identity.action.loginAjax" ></action>
        
        <!-- 配置index跳转action,当前命名空间下的全局action -->
        <action name="*">
