@@ -57,7 +57,7 @@
         	<a class="headtopout" title="退出系统" href="javascript:void(0);" onclick="exit();">安全退出</a>
         	<a class="headtopout" title="密码修改" href="javascript:void(0);" onclick="password();">密码修改</a>
 			<div class="titlexx">
-				<span style="font-size:14px;">张三</span>&nbsp;您好，欢迎使用本系统&nbsp;&nbsp;
+				<span style="font-size:14px;">${admin_session_user.name}</span>&nbsp;您好，欢迎使用本系统&nbsp;&nbsp;
 				<span id="time" style="color:#fff;"></span>
 				
 			</div>

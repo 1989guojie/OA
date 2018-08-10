@@ -73,7 +73,7 @@
 						async : true,
 						success : function(data) {
 							if (data.status == 0) {  // 返回json为0代表登录成功
-								window.location = "${ctx}/admin/main.jspx";
+								window.location = "${ctx}/admin/main.jspx";  // 登录成功跳转到主页
 							} else {
 								$("#img").trigger("click");  // 触发click事件换验证码
 								alert(data.tip)
@@ -84,13 +84,16 @@
 						}
 						
 					});
-					
 				}
-				
 			});
 
-			
-			
+			// 登录时点击回车跳转到主页面
+			// 为document绑定onkeydown事件
+			$(document).keydown(function(event) {
+				if (event.keyCode == 13) {
+					$("#loginBtn").trigger("click");  // 触发点击事件
+				}
+			});
 		});
 		
 	</script>

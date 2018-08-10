@@ -85,4 +85,14 @@ public class IdentityServiceImpl implements IdentityService {
 		}
 		
 	}
+
+	// 根据用户Id获取用户
+	public User getUser(String userId) {
+		
+		try {
+			return userDao.get(User.class, userId);
+		} catch (Exception e) {
+			throw new OAException("用户登录时出现异常", e);
+		}
+	}
 }

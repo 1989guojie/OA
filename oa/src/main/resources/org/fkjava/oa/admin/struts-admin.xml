@@ -7,14 +7,31 @@
 
     <package name="admin" namespace="/admin" extends="oa">
 
+		<!-- 配置子系统级别的拦截器 -->
+		<interceptors>
+			<interceptor name="loginInterceptor" class="org.fkjava.oa.admin.interceptor.LoginInterceptor" />
+			<!-- 配置拦截器栈 -->
+			<interceptor-stack name="loginStack">
+				<!-- 引用默认拦截器栈 -->
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="loginInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		
+		<!-- 配置默认的拦截器引用 -->
+		<default-interceptor-ref name="loginStack" />
+
 		<!-- 全局结果配置 -->
         <global-results>
-            <result name="error">/error.jsp</result>
+            <result name="error">/404.jsp</result>
             <result name="login">/WEB-INF/jsp/admin/login.jsp</result>
         </global-results>
         
         <!-- 异步请求登录，不需要返回视图 -->
-        <action name="loginAjax" class="org.fkjava.oa.admin.identity.action.loginAjax" ></action>
+        <action name="loginAjax" class="org.fkjava.oa.admin.identity.action.LoginAjax" >
+        	<!-- 用默认拦截器则自定义的失效了 -->
+        	<interceptor-ref name="defaultStack" />
+        </action>
        
        <!-- 配置index跳转action,当前命名空间下的全局action -->
        <action name="*">

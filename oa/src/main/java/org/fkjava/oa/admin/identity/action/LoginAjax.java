@@ -5,7 +5,7 @@ import org.fkjava.oa.core.action.AbstractAjaxAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-public class loginAjax extends AbstractAjaxAction {
+public class LoginAjax extends AbstractAjaxAction {
 	
 	private static final long serialVersionUID = 4088280409239782387L;
 	
