@@ -10,6 +10,7 @@ import org.fkjava.oa.admin.identity.domain.User;
 import org.fkjava.oa.admin.identity.service.IdentityService;
 import org.fkjava.oa.core.action.VerifyAction;
 import org.fkjava.oa.core.common.CookieTools;
+import org.fkjava.oa.core.common.web.PageModel;
 import org.fkjava.oa.core.exception.OAException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -93,6 +94,17 @@ public class IdentityServiceImpl implements IdentityService {
 			return userDao.get(User.class, userId);
 		} catch (Exception e) {
 			throw new OAException("用户登录时出现异常", e);
+		}
+	}
+
+
+	/** 多条件分页查询 */
+	public List<User> getUserByPage(User user, PageModel pageModel) {
+		
+		try {
+			return userDao.getUserByPage(user, pageModel);
+		} catch (Exception e) {
+			throw new OAException("多条件分页查询用户时出现异常", e);
 		}
 	}
 }

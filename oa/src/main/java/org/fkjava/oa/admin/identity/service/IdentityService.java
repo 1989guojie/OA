@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.fkjava.oa.admin.identity.domain.Job;
 import org.fkjava.oa.admin.identity.domain.User;
+import org.fkjava.oa.core.common.web.PageModel;
 
 public interface IdentityService {
 
@@ -18,5 +19,8 @@ public interface IdentityService {
 	 * 根据用户Id获取用户
 	 */
 	User getUser(String userId);
+
+	/** 多条件分页查询 */
+	List<User> getUserByPage(User user, PageModel pageModel);
 
 }

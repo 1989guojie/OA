@@ -64,7 +64,7 @@
 	    			// 添加树对象
 	    			d.add(1, -1, "办公管理系统");
 	    			d.add(2, 1, "系统管理");
-	    			d.add(4, 2, "用户管理", "javascript:parent.mainframe.addTab('tab_2', '用户管理', 'http://www.hao123.com')", "用户管理");
+	    			d.add(4, 2, "用户管理", "javascript:parent.mainframe.addTab('tab_2', '用户管理', '/admin/identity/selectUser.jspx')", "用户管理");
 	    			d.add(5, 2, "角色管理", "javascript:parent.mainframe.addTab('tab_3', '角色管理', 'http://www.hao123.com')", "角色管理");
 	    			d.add(6, 2, "操作管理", "javascript:parent.mainframe.addTab('tab_4', '操作管理', 'http://www.hao123.com')", "操作管理");
 	    			d.add(7, 2, "流程管理", "javascript:parent.mainframe.addTab('tab_5', '流程管理', 'http://www.hao123.com')", "流程管理");

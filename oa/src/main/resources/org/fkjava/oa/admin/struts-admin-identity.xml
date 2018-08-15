@@ -6,9 +6,10 @@
 <struts>
 
     <package name="admin-identity" namespace="/admin/identity" extends="admin">
-
-
-        
+		<!-- 多条件分页查询 -->
+		<action name="selectUser" class="org.fkjava.oa.admin.identity.action.UserAction" method="selectUser">
+			<result>/WEB-INF/jsp/admin/identity/user.jsp</result>
+		</action>        
     </package>
     
 </struts>
