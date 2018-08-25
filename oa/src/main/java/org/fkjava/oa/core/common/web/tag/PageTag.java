@@ -73,7 +73,7 @@ public class PageTag extends SimpleTagSupport {
 			int endNum = pageIndex == totalPage ? recordCount : pageIndex * pageSize;
 			
 			/** 拼最终的结果 */
-			res.append("<table width='100%' align='center' style='font-size:13px;' class='"+ style +"'>")
+			res.append("<table width='98%' align='center' style='font-size:13px;' class='"+ style +"'>")
 			   .append("<tr><td>")
 			   .append(str.toString() + "跳转到<input type='text' size='2' id='pager_jump_num'/>")
 			   .append("<input type='button' value='确定' id='pager_jump_btn'/>")

@@ -1,8 +1,10 @@
 package org.fkjava.oa.admin.identity.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.fkjava.oa.admin.common.AdminConstant;
+import org.fkjava.oa.admin.identity.dao.DeptDao;
 import org.fkjava.oa.admin.identity.dao.JobDao;
 import org.fkjava.oa.admin.identity.dao.UserDao;
 import org.fkjava.oa.admin.identity.domain.Job;
@@ -20,6 +22,7 @@ import org.springframework.util.StringUtils;
 
 import com.opensymphony.xwork2.ActionContext;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @Service(value="identityService")
@@ -34,6 +37,10 @@ public class IdentityServiceImpl implements IdentityService {
 	@Qualifier(value="userDao")
 	private UserDao userDao;
 	
+	@Autowired(required=true)
+	@Qualifier(value="deptDao")
+	private DeptDao deptDao;
+	
 	@Override
 	@Transactional(readOnly=true)
 	public List<Job> getJobs() {
@@ -45,6 +52,7 @@ public class IdentityServiceImpl implements IdentityService {
 	/**
 	 * 用户登录
 	 */
+	@Transactional(readOnly=true)
 	public String login(String userId, String password, String vcode, Integer key) {
 		try {
 			
@@ -88,6 +96,7 @@ public class IdentityServiceImpl implements IdentityService {
 	}
 
 	// 根据用户Id获取用户
+	@Transactional(readOnly=true)
 	public User getUser(String userId) {
 		
 		try {
@@ -99,12 +108,90 @@ public class IdentityServiceImpl implements IdentityService {
 
 
 	/** 多条件分页查询 */
+	@Transactional(readOnly=true)  // 扩大session作用范围
 	public List<User> getUserByPage(User user, PageModel pageModel) {
 		
 		try {
-			return userDao.getUserByPage(user, pageModel);
+			 List<User> users = userDao.getUserByPage(user, pageModel);
+			// 加载延迟属性,需要在业务层加载，此时session未关闭
+			for (User u : users) {
+				if (u.getDept() != null) {
+					u.getDept().getName();  // get立即获取,load延迟加载
+				}
+				if (u.getJob() != null) {
+					u.getJob().getName();
+				}
+				if (u.getCreater() != null) {
+					u.getCreater().getName();
+				}
+				if (u.getChecker() != null) {
+					u.getChecker().getName();
+				}
+			}
+			
+			return users;
 		} catch (Exception e) {
 			throw new OAException("多条件分页查询用户时出现异常", e);
+		}
+	}
+
+
+	// 加载部门下拉列表  返回json格式字符串 
+	@Transactional(readOnly=true)  // 扩大session作用范围
+	public String loadDept() {
+		try {
+			// data [{id:1, name:'技术部'}, {}, {}]
+			// [] list
+			// {} Map new map(code as code, name as name)
+			List<Map<String, Object>> depts = deptDao.loadDept();
+			// 把集合转换为json数组
+			return JSONArray.fromObject(depts).toString();
+			
+		} catch (Exception e) {
+			throw new OAException("加载部门时出现异常", e);
+		}
+	}
+
+	// 加载职位下拉列表
+	public String loadJob() {
+		try {
+			// data [{code:1, name:'java开发工程师'}, {}, {}]
+			List<Map<String, Object>> jobs = jobDao.loadJobs();
+			// 把集合转换为json数组
+			return JSONArray.fromObject(jobs).toString();
+			
+		} catch (Exception e) {
+			throw new OAException("加载部门时出现异常", e);
+		}
+	}
+	
+	
+
+	// 加载部门职位下拉列表
+	@Transactional(readOnly=true)
+	public String loadDeptJob() {
+		try {
+			// data : {"depts" : [{},{}], "jobs" : [{}, {}]}  一次返回职位和部门下拉列表
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("depts", loadDept());
+			jsonObject.put("jobs", loadJob());
+			
+			return jsonObject.toString();
+			
+		} catch (Exception e) {
+			throw new OAException("加载部门与职位时出现异常", e);
+		}
+	}
+
+
+	// 验证用户名
+	@Transactional(readOnly=true)
+	public boolean validUserId(String userId) {
+		try {
+			return getUser(userId) == null;
+			
+		} catch (Exception e) {
+			throw new OAException("加载部门与职位时出现异常", e);
 		}
 	}
 }

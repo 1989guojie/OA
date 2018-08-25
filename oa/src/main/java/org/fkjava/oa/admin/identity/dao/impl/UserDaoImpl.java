@@ -16,8 +16,8 @@ public class UserDaoImpl extends HibernateDaoImpl implements UserDao {
 	/** 多条件分页查询 */
 	public List<User> getUserByPage(User user, PageModel pageModel) {
 		
-		StringBuffer hql = new StringBuffer();
-		hql.append("select u from User as u where 1=1");
+		StringBuilder hql = new StringBuilder();
+		hql.append("select u from User as u ");
 		
 		// 定义集合封装查询条件
 		List<Object> params = new ArrayList<>();
@@ -27,17 +27,17 @@ public class UserDaoImpl extends HibernateDaoImpl implements UserDao {
 			// 存在用户姓名 
 			if (StringUtils.hasText(user.getName())) {
 				hql.append(" and u.name like ? ");
-				params.add("%"+user.getName()+"%");
+				params.add("%"+ user.getName() +"%");
 			}
 			// 手机号
 			if (StringUtils.hasText(user.getPhone())) {
 				hql.append(" and u.phone like ? ");
-				params.add("%"+user.getPhone()+"%");
+				params.add("%"+ user.getPhone() +"%");
 			}
 			// 用户部门
 			if (user.getDept() != null && user.getDept().getId() > 0) {
 				hql.append(" and u.dept.id = ?");
-				params.add("%"+user.getDept().getId()+"%");
+				params.add(user.getDept().getId());
 			}
 		}
 		

@@ -9,7 +9,23 @@
 		<!-- 多条件分页查询 -->
 		<action name="selectUser" class="org.fkjava.oa.admin.identity.action.UserAction" method="selectUser">
 			<result>/WEB-INF/jsp/admin/identity/user.jsp</result>
-		</action>        
+		</action> 
+		
+		<!-- 添加用户 -->
+		<action name="showAddUser" >
+			<result>/WEB-INF/jsp/admin/identity/addUser.jsp</result>
+		</action> 
+		
+		
+		<!-- 异步加载部分下拉列表 --> 
+		<action name="loadDeptAjax" class="org.fkjava.oa.admin.identity.action.LoadDeptAjax" method=""></action>    
+		
+		<!-- 异步加载部门与职位下拉列表 -->
+		<action name="deptJobAjax" class="org.fkjava.oa.admin.identity.action.LoadDeptJobAjax" method=""></action>
+		
+		<!-- 异步验证用户名是否重复 -->
+		<action name="validUserIdAjax" class="org.fkjava.oa.admin.identity.action.ValidUserAjax"></action>
+		  
     </package>
     
 </struts>

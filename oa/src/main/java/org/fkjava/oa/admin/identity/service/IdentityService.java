@@ -23,4 +23,16 @@ public interface IdentityService {
 	/** 多条件分页查询 */
 	List<User> getUserByPage(User user, PageModel pageModel);
 
+	/** 加载部门下拉列表  返回json格式字符串 */
+	String loadDept();
+
+	/** 加载部门和职位下拉框 */
+	String loadDeptJob();
+	
+	/** 加载职位下拉列表 */
+	String loadJob();
+
+	/** 验证用户登录名 */
+	boolean validUserId(String userId);
+
 }
