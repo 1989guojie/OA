@@ -13,7 +13,7 @@ public interface IdentityService {
 	/**
 	 * 用户登录
 	 */
-	String login(String userId, String password, String vcode, Integer key);
+	String login(String userId, String password, String vcode, Integer key) throws Exception;
 
 	/**
 	 * 根据用户Id获取用户
@@ -34,5 +34,8 @@ public interface IdentityService {
 
 	/** 验证用户登录名 */
 	boolean validUserId(String userId);
+
+	/** 添加用户 */
+	void saveUser(User user);
 
 }

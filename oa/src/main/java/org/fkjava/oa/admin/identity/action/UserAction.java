@@ -6,6 +6,7 @@ import org.apache.struts2.ServletActionContext;
 import org.fkjava.oa.admin.identity.domain.User;
 import org.springframework.util.StringUtils;
 
+
 /**
  * 用户管理控制器
  */
@@ -15,6 +16,8 @@ public class UserAction extends IdentityAction {
 	
 	private User user;
 	private List<User> users;
+	// 重输密码
+	private String repwd;
 	
 	/** 多条件分页查询 */
 	public String selectUser() {
@@ -34,6 +37,19 @@ public class UserAction extends IdentityAction {
 		
 		return SUCCESS;
 	}
+	
+	// 添加用户
+	public String addUser() {
+		try {
+			identityService.saveUser(user);
+			this.setTip("添加成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.setTip("添加失败");
+		}
+		return SUCCESS;
+		
+	}
 
 	public User getUser() {
 		return user;
@@ -50,4 +66,13 @@ public class UserAction extends IdentityAction {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
+
+	public String getRepwd() {
+		return repwd;
+	}
+
+	public void setRepwd(String repwd) {
+		this.repwd = repwd;
+	}
+	
 }

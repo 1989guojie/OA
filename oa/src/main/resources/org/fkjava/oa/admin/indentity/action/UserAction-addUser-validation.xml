@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+		"-//Apache Struts//XWork Validator 1.0.3//EN"
+		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+	<!-- 登录名 -->
+	<field name="user.userId">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>登录名不能为空</message>
+		</field-validator>
+		
+		<field-validator type="regex">
+			<param name="regex"><![CDATA[^\w{5,20}$]]></param>
+			<message>登录名格式不正确</message>
+		</field-validator>
+	</field>
+	
+	<!-- 密码 -->
+	<field name="user.passWord">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>密码名不能为空</message>
+		</field-validator>
+		
+		<field-validator type="regex">
+			<param name="regex"><![CDATA[^\w{5,20}$]]></param>
+			<message>密码名格式不正确</message>
+		</field-validator>
+	</field>
+	
+	<!-- 重输密码 -->
+	<field name="repwd">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>重输密码名不能为空</message>
+		</field-validator>
+		
+		<field-validator type="regex">
+			<param name="regex"><![CDATA[^\w{6,20}$]]></param>
+			<message>重输密码名格式不正确</message>
+		</field-validator>
+		
+		<field-validator type="fieldexpression">
+			<param name="expression"><![CDATA[user.passWord == repwd]]></param>
+			<message>两次密码不一致</message>
+		</field-validator>
+	</field>
+	
+	<!-- 邮箱 -->
+	<field name="user.email">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>邮箱不能为空</message>
+		</field-validator>
+		<field-validator type="email">
+			<message>邮箱格式不正确</message>
+		</field-validator>
+	</field>
+	
+</validators>

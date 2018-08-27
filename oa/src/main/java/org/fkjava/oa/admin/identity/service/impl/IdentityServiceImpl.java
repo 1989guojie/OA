@@ -1,5 +1,6 @@
 package org.fkjava.oa.admin.identity.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.fkjava.oa.admin.identity.domain.User;
 import org.fkjava.oa.admin.identity.service.IdentityService;
 import org.fkjava.oa.core.action.VerifyAction;
 import org.fkjava.oa.core.common.CookieTools;
+import org.fkjava.oa.core.common.security.MD5;
 import org.fkjava.oa.core.common.web.PageModel;
 import org.fkjava.oa.core.exception.OAException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,7 @@ public class IdentityServiceImpl implements IdentityService {
 	 * 用户登录
 	 */
 	@Transactional(readOnly=true)
-	public String login(String userId, String password, String vcode, Integer key) {
+	public String login(String userId, String password, String vcode, Integer key) throws Exception {
 		try {
 			
 			// 定义提示信息
@@ -68,7 +70,8 @@ public class IdentityServiceImpl implements IdentityService {
 				if (StringUtils.hasText(userId) && StringUtils.hasText(password)) {
 					// 3.根据用户名和密码查询用户
 					User user = userDao.get(User.class, userId);
-					if (user != null && user.getPassWord().equals(password)) {
+					// 密码加密后再作比较
+					if (user != null && user.getPassWord().equals(MD5.getMD5(password))) {
 						// 4.存入session
 						ActionContext.getContext().getSession().put(AdminConstant.ADMIN_SESSION_USER, user);
 						// 5.是否要记住用户
@@ -192,6 +195,21 @@ public class IdentityServiceImpl implements IdentityService {
 			
 		} catch (Exception e) {
 			throw new OAException("加载部门与职位时出现异常", e);
+		}
+	}
+
+
+	// 添加用户
+	public void saveUser(User user) {
+		try {
+			// 补全实体
+			user.setCreateDate(new Date());
+			user.setCreater(AdminConstant.getSessionUser());
+			user.setPassWord(MD5.getMD5(user.getPassWord()));  // 使用MD5加密
+			userDao.save(user);
+			
+		} catch (Exception e) {
+			throw new OAException("添加用户失败", e);
 		}
 	}
 }

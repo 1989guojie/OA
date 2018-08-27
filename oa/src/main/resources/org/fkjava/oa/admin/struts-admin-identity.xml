@@ -25,7 +25,18 @@
 		
 		<!-- 异步验证用户名是否重复 -->
 		<action name="validUserIdAjax" class="org.fkjava.oa.admin.identity.action.ValidUserAjax"></action>
-		  
+		
+		<!-- 添加用户 -->
+		<action name="addUser" class="org.fkjava.oa.admin.identity.action.UserAction" method="addUser">
+			<interceptor-ref name="loginStack"></interceptor-ref>
+			<interceptor-ref name="token"></interceptor-ref>
+			
+			<result>/WEB-INF/jsp/admin/identity/addUser.jsp</result>
+			<!-- validation校验 -->
+			<result name="input">/WEB-INF/jsp/admin/identity/addUser.jsp</result>
+			<!-- 防止表单提交 -->
+			<result name="invalid.token">/WEB-INF/jsp/admin/identity/addUser.jsp</result>
+		</action>
     </package>
     
 </struts>

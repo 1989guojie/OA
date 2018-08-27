@@ -24,6 +24,9 @@ public class IdentityAction extends ActionSupport {
 	 * protected同一包下能访问
 	 */
 	protected PageModel pageModel = new PageModel();
+	
+	/** 定义提示消息 */
+	private String tip;
 
 	/** 初始化页面，响应数据  */
 	public PageModel getPageModel() {
@@ -32,6 +35,14 @@ public class IdentityAction extends ActionSupport {
 
 	public void setPageModel(PageModel pageModel) {
 		this.pageModel = pageModel;
+	}
+
+	public String getTip() {
+		return tip;
+	}
+
+	public void setTip(String tip) {
+		this.tip = tip;
 	}
 	
 }

@@ -39,23 +39,99 @@
 					}
 				});
 				
+				// 定义用户名是否重复的标识符
+				var isFlag = false;
+				
 				// 登录名不能重复
 				$("#userId").blur(function() {
 					if ($.trim(this.value) != "" && /^\w{5,20}/.test($.trim(this.value))) { // 5到20位,this是dom元素，不能用jq方法
 						// 异步验证
 						$.post("${ctx}/admin/identity/validUserIdAjax.jspx", "userId="+this.value, function(data, status){
-							if (!eval(data)) {  // 把json转换成字符串
+							isFlag = eval(data);  // 把json转换成字符串
+							if (!isFlag) {  
 								alert("登录名重复");
 							}
 						}, "text");
 					}
 				});
-			})
+				
+				
+				// 添加用户作前台校验
+				$("#btn_submit").click(function(){
+					// 对表单中所有字段做校验
+					var userId = $("#userId");
+					var name = $("#name");
+					var passWord = $("#passWord");
+					var repwd = $("#repwd");
+					var email = $("#email");
+					var tel = $("#tel");
+					var phone = $("#phone");
+					var qqNum = $("#qqNum");
+					var answer = $("#answer");
+					var msg = "";
+					if ($.trim(userId.val()) == ""){
+						msg += "用户登录名不能为空!";
+						userId.focus();
+					}else if (!/^\w{5,20}$/.test(userId.val())){
+						msg += "用户登录名长度必须在5-20之间!";
+						userId.focus();
+					}else if (!isFlag){
+						msg += "用户登录名重复!";
+					}else if ($.trim(name.val()) == ""){
+						msg += "姓名不能为空!";
+						name.focus();
+					}else if ($.trim(passWord.val()) == ""){
+						msg += "密码不能为空!";
+						passWord.focus();
+					}else if (!/^\w{6,20}$/.test(passWord.val())){
+						msg += "密码长度必须为6-20之间!";
+						passWord.focus();
+					}else if (repwd.val() != passWord.val()){
+						msg += "两次输入的密码不一致!";
+						repwd.focus();
+					}else if ($.trim(email.val()) == ""){
+						msg += "邮箱不能为空!";
+						email.focus();
+					}else if (!/^\w+@\w{2,}.\w{2,}$/.test(email.val())){
+						msg += "邮箱格式不正确!";
+						email.focus();
+					}else if ($.trim(tel.val()) == ""){
+						msg += "电话号码不能为空!";
+						tel.focus();
+					}else if (!/^0\d{2,3}-?\d{7,8}$/.test(tel.val())){
+						msg += "电话号码格式不正确!";
+						tel.focus();
+					}else if ($.trim(phone.val()) == ""){
+						msg += "手机号码不能为空!";
+						phone.focus();
+					}else if (!/^1[3|5|8]\d{9}$/.test(phone.val())){
+						msg += "手机号码格式不正确!";
+						phone.focus();
+					}else if ($.trim(qqNum.val()) == ""){
+						msg += "QQ号码不能为空!";
+						qqNum.focus();
+					}else if (!/^\d{5,11}$/.test(qqNum.val())){
+						msg += "QQ号码长度必须在5-11之间!";
+						qqNum.focus();
+					}else if ($.trim(answer.val()) == ""){
+						msg += "密保问题不能为空!";
+						answer.focus();
+					}
+					// 直接提交
+					if (msg != ""){
+						alert(msg);
+					}else{
+						$("#addUserForm").submit();
+					}
+				});
+				
+			});
 		</script>
 	</head>
 <body>
 	<table align="center">
-		<s:actionerror/><s:fielderror/>
+		<s:actionerror cssStyle="font-size:12px; color:red;"/>
+		<s:fielderror/>
 		<s:if test="tip != null">
 			<center><span style="color:red;">${tip}</span></center>
 		</s:if>
@@ -89,14 +165,14 @@
 				</td>
 				<td>
 					部&nbsp;&nbsp;&nbsp;&nbsp;门：
-					<select id="deptSelect" name="deptId"></select>
+					<select id="deptSelect" name="user.dept.id"></select>
 				</td>
 			</tr>
 
 			<tr>
 				<td>
 					职&nbsp;&nbsp;&nbsp;&nbsp;位：
-					<select id="jobSelect" name="jobId"></select>
+					<select id="jobSelect" name="user.job.code"></select>
 				</td>
 				<td>
 					邮&nbsp;&nbsp;&nbsp;&nbsp;箱：
